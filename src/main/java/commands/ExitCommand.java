@@ -1,15 +1,20 @@
 package commands;
 
-/**
- * Command that terminates the application.
- */
 public class ExitCommand implements Command {
-    /**
-     * Prints a shutdown message and exits the program.
-     */
+    private final Runnable exiter;
+
+    public ExitCommand() {
+        this(() -> System.exit(0));
+    }
+
+    // конструктор для тесту
+    public ExitCommand(Runnable exiter) {
+        this.exiter = exiter;
+    }
+
     @Override
     public void execute() {
         System.out.println("The program has finished working!");
-        System.exit(0);
+        exiter.run();
     }
 }

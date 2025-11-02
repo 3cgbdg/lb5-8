@@ -74,7 +74,7 @@ public class GroundCoffee extends Coffee {
     @Override
     public String toFileString() {
         return String.join(";",
-                "BEAN",
+                "GROUND",
                 getId(),
                 getName(),
                 String.valueOf(getWeight()),

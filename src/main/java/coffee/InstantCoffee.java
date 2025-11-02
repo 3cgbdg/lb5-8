@@ -73,7 +73,7 @@ public class InstantCoffee extends Coffee {
     @Override
     public String toFileString() {
         return String.join(";",
-                "BEAN",
+                "INSTANT",
                 getId(),
                 getName(),
                 String.valueOf(getWeight()),
