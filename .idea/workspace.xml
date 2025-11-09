@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="510b4229-0dc4-4f21-a349-31217b4db8be" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/menu/MenuTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/coffee/Coffee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/coffee/Coffee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/coffeevan/CoffeeVan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/coffeevan/CoffeeVan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/coffeevan/CoffeeVanApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/coffeevan/CoffeeVanApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/CheckRemainBudgetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/CheckRemainBudgetCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/CheckRemainVolumeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/CheckRemainVolumeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/CountTotalPriceCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/CountTotalPriceCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/ExitCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/GetFromFileCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/GetFromFileCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/LoadVanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/LoadVanCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/RemoveByIdCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/RemoveByIdCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/SaveToFileCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/SaveToFileCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/SearchByQuality.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/SearchByQuality.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/ShowCoffeeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/ShowCoffeeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/SortCoffeeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/SortCoffeeCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/qualityparams/QualityParams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/qualityparams/QualityParams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/CoffeeStorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/CoffeeStorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/coffeevan/CoffeeVanTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/coffeevan/CoffeeVanTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/CheckRemainBudgetCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/CheckRemainBudgetCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/CheckRemainVolumeCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/CheckRemainVolumeCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/CountTotalPriceCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/CountTotalPriceCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/ExitCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/ExitCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/GetFromFileCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/GetFromFileCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/LoadVanCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/LoadVanCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/RemoveByIdCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/RemoveByIdCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/SaveToFileCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/SaveToFileCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/SearchByQualityTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/SearchByQualityTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/ShowCoffeeCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/ShowCoffeeCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/commands/SortCoffeeCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/commands/SortCoffeeCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/CoffeeStorageServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/CoffeeStorageServiceTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;3cgbdg&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/3cgbdg/lb5-8.git&quot;,
+    &quot;accountId&quot;: &quot;7db5f1c3-2356-466d-81f6-a52c5b061785&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="35FsHspRYq7cW88x3kFKrAuRfLz" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CoffeeVanApp.executor": "Run",
+    "JUnit.LoadVanCommandTest.executor": "Run",
+    "Maven.CoffeeVanMaven [clean].executor": "Run",
+    "Maven.CoffeeVanMaven [install].executor": "Run",
+    "Maven.CoffeeVanMaven [test].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="CoffeeVanApp" type="Application" factoryName="Application" nameIsGenerated="true">
+      <envs>
+        <env name="COFFEE_EMAIL_USER" value="bogdantytysh5@gmail.com" />
+        <env name="COFFEE_EMAIL_PASS" value="lfdqacfqjoilifjp" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="coffeevan.CoffeeVanApp" />
+      <module name="CoffeeVanMaven" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="coffeevan.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="510b4229-0dc4-4f21-a349-31217b4db8be" name="Changes" comment="" />
+      <created>1762717070315</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762717070315</updated>
+      <workItem from="1762717072424" duration="2743000" />
+      <workItem from="1762719836655" duration="2745000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CoffeeVanMaven$CoffeeVanApp.ic" NAME="CoffeeVanApp Coverage Results" MODIFIED="1762720555774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>coffeevan.*</FILTER>
+    </SUITE>
+  </component>
+</project>
