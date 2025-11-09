@@ -3,6 +3,8 @@ package coffee;
 import coffee.enums.ConcentrationLevel;
 import coffee.enums.GrindSize;
 import coffee.enums.RoastLevel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import packaging.Packaging;
 import qualityparams.QualityParams;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
  * Serves as the foundation for specific coffee types such as bean, ground, and instant coffee.
  */
 abstract public class Coffee {
+    private static final Logger LOGGER = LogManager.getLogger(Coffee.class);
     private final String name;
     private final double weight;
     private final double price;
@@ -37,6 +40,7 @@ abstract public class Coffee {
         this.packaging = packaging;
         this.id = UUID.randomUUID().toString();
     }
+
     public Coffee(String name, double weight, double price, QualityParams quality, Packaging packaging, String id) {
         this.name = name;
         this.weight = weight;
@@ -195,7 +199,7 @@ abstract public class Coffee {
                     throw new IllegalArgumentException("Unknown coffee type: " + type);
             }
         } catch (Exception e) {
-            System.out.println("Error reading line: " + s);
+            LOGGER.error("Critical Error: Failed to parse line from file. Line: '{}'", s, e);
             return null;
         }
     }

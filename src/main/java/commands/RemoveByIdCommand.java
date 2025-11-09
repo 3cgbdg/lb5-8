@@ -2,6 +2,9 @@ package commands;
 
 import coffee.Coffee;
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import services.CoffeeStorageService;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,15 +15,18 @@ import java.util.Scanner;
  * Command that removes a coffee item from the {@link CoffeeVan} by its unique ID.
  */
 public class RemoveByIdCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(RemoveByIdCommand.class);
     private final CoffeeVan coffeeVan;
+    private CoffeeStorageService coffeeStorage;
 
     /**
      * Constructs a new command for removing coffee by ID.
      *
      * @param coffeeVan the {@link CoffeeVan} instance to operate on
      */
-    public RemoveByIdCommand(CoffeeVan coffeeVan) {
+    public RemoveByIdCommand(CoffeeVan coffeeVan, CoffeeStorageService coffeeStorage) {
         this.coffeeVan = coffeeVan;
+        this.coffeeStorage = coffeeStorage;
     }
 
     /**
@@ -35,20 +41,20 @@ public class RemoveByIdCommand implements Command {
             System.out.print("Type in ID of a product you want to remove: ");
             id = sc.nextLine().trim();
             if (id.isEmpty()) {
-                System.out.println("ID cannot be empty! Try again.");
+                LOGGER.warn("ID cannot be empty! Try again.");
             }
         }
         boolean isRemoved = coffeeVan.removeCoffeeById(id);
-        if(isRemoved){
-            try (PrintWriter writer = new PrintWriter(new FileWriter("coffee_data.csv"))) {
-                for (Coffee coffee : coffeeVan.getCargo()) {
-                    writer.println(coffee.toFileString());
-                }
+        if (isRemoved) {
+            try {
+                coffeeStorage.saveToFile(coffeeVan.getCargo(),false);
+                LOGGER.info("Cargo updated file (after removal).");
+            } catch (IOException e) {
+                LOGGER.error("Failed to update after removal.", e);
+                throw e;
             }
+
         }
-        System.out.println(isRemoved ? "Item was successfully removed!" : "Item was not found!");
-
-
     }
 }
 

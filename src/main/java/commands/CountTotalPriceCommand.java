@@ -1,12 +1,15 @@
 package commands;
 
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Command that calculates and displays the total cost of all coffee items
  * currently loaded in the {@link CoffeeVan}.
  */
 public class CountTotalPriceCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(CountTotalPriceCommand.class);
     private final CoffeeVan coffeeVan;
 
     /**
@@ -23,7 +26,7 @@ public class CountTotalPriceCommand implements Command {
      */
     @Override
     public void execute() {
-        System.out.format("Total price is %f", coffeeVan.getTotalCost());
+        LOGGER.info("Total cargo price: {} $", coffeeVan.getTotalCost());
     }
 }
 

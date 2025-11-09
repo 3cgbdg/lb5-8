@@ -3,7 +3,6 @@ package commands;
 import static org.mockito.Mockito.*;
 
 import coffeevan.CoffeeVan;
-import commands.ShowCoffeeCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,11 +12,9 @@ class ShowCoffeeCommandTest {
     @Mock
     private CoffeeVan coffeeVan;
 
-    private AutoCloseable closeable;
-
     @BeforeEach
     void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
+        AutoCloseable closeable = MockitoAnnotations.openMocks(this);
     }
 
     @Test

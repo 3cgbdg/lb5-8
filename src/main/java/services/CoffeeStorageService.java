@@ -1,5 +1,7 @@
 package services;
 import coffee.Coffee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class CoffeeStorageService {
     private  String filename;
+    private static final Logger LOGGER = LogManager.getLogger(CoffeeStorageService.class);
 
 
     /**
@@ -15,17 +18,20 @@ public class CoffeeStorageService {
      */
     public CoffeeStorageService(String filename) {
         this.filename = filename;
+        LOGGER.info("StorageService initialized. File: {}", filename);
     }
-
-    public void saveToFile(List<Coffee> coffeeList) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename,true))) {
+    public void saveToFile(List<Coffee> coffeeList, boolean toNotReplaceFully) throws IOException {
+        LOGGER.info("Saving {} coffee items to file {}...", coffeeList.size(), filename);
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename,toNotReplaceFully))) {
             for (Coffee coffee : coffeeList) {
                 writer.println(coffee.toFileString());
             }
+            LOGGER.info("Successfully saved to file {}.", filename);
         }
     }
 
     public List<Coffee> getFromFile()throws IOException {
+        LOGGER.info("Reading coffee from file {}...", filename);
         // temporary arrayList as returning value
         List<Coffee> loadedCoffee = new ArrayList<>();
         try (
@@ -39,6 +45,7 @@ public class CoffeeStorageService {
             }
 
         }
+        LOGGER.info("Successfully loaded {} items from file {}.", loadedCoffee.size(), filename);
         return loadedCoffee;
     }
 

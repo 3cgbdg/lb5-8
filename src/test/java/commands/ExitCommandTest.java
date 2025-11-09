@@ -1,41 +1,24 @@
 package commands;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
+import java.util.concurrent.atomic.AtomicBoolean; // Use AtomicBoolean as it's final and can be modified inside the lambda
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class ExitCommandTest {
 
-    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-
-    @BeforeEach
-    void setUp() {
-        System.setOut(new PrintStream(outputStream));
-    }
-
-    @AfterEach
-    void tearDown() {
-        System.setOut(originalOut);
-    }
-
     @Test
-    void testExecute_printsShutdownMessageAndTriggersCallback() {
-        // Used an array to hold a mutable boolean inside the lambda
-        final boolean[] exited = {false};
+    void testExecute_triggersCallback() {
+        // Use AtomicBoolean as it's final and can be modified inside the lambda
+        final AtomicBoolean exited = new AtomicBoolean(false);
 
-        ExitCommand command = new ExitCommand(() -> exited[0] = true);
+        // Create command with a "fake" exit runnable
+        ExitCommand command = new ExitCommand(() -> exited.set(true));
 
+        // Action
         command.execute();
 
-        String output = outputStream.toString();
-        assertTrue(output.contains("The program has finished working!"));
-        assertTrue(exited[0], "Exiter runnable should be triggered");
+        // Verify: was our fake exit runnable triggered?
+        assertTrue(exited.get(), "Exiter runnable should be triggered");
+
     }
 }

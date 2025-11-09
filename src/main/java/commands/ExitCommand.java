@@ -1,6 +1,11 @@
 package commands;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ExitCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(ExitCommand.class);
+
     private final Runnable exiter;
 
     public ExitCommand() {
@@ -14,7 +19,7 @@ public class ExitCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("The program has finished working!");
+        LOGGER.info("Program is exiting by user command.");
         exiter.run();
     }
 }

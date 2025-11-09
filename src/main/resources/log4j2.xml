@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="FileAppender"
+                     fileName="logs/coffee-van.log"
+                     filePattern="logs/coffee-van-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+        </RollingFile>
+
+        <SMTP name="EmailAppender"
+              subject="[CoffeeVan Project] Critical Error!"
+              to="bogdantytysh5@gmail.com"
+              from="${env:COFFEE_EMAIL_USER}"
+              smtpHost="smtp.gmail.com"
+              smtpPort="465"
+              smtpProtocol="smtps"
+              smtpUsername="${env:COFFEE_EMAIL_USER}"
+              smtpPassword="${env:COFFEE_EMAIL_PASS}"
+              bufferSize="1">
+
+            <!-- Ці властивості для SSL -->
+            <Property name="mail.smtps.auth">true</Property>
+            <Property name="mail.smtps.ssl.enable">true</Property>
+            <Property name="mail.smtps.ssl.trust">smtp.gmail.com</Property>
+
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c - %m%n</Pattern>
+            </PatternLayout>
+        </SMTP>
+
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="EmailAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

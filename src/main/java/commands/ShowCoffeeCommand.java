@@ -1,6 +1,8 @@
 package commands;
 
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Command that displays detailed information about all coffee items in the {@link CoffeeVan}.

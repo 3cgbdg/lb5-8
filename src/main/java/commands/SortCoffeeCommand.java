@@ -2,14 +2,16 @@ package commands;
 
 import coffee.Coffee;
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Command that sorts all coffee items in the {@link CoffeeVan}
  * by their price-to-weight ratio (price per kilogram).
  */
 public class SortCoffeeCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(SortCoffeeCommand.class);
     private final CoffeeVan coffeeVan;
-
     /**
      * Constructs a new command for sorting coffee items.
      *
@@ -25,13 +27,14 @@ public class SortCoffeeCommand implements Command {
     @Override
     public void execute() {
         if (coffeeVan.getCargo().isEmpty()) {
-            System.out.println("There is no coffee yet!");
+            LOGGER.warn("Cannot sort: van is empty!");
             return;
         }
+        LOGGER.info("Sorting cargo by price/weight ratio...");
         coffeeVan.sortByPricePerKg();
-        System.out.println("Sorted cargo:");
+        LOGGER.info("Sorted cargo:");
         for (Coffee coffee : coffeeVan.getCargo()) {
-            System.out.println(coffee.getInfo());
+            LOGGER.info(coffee.getInfo());
         }
     }
 }

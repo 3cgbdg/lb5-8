@@ -1,5 +1,8 @@
 package qualityparams;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Represents coffee quality parameters including aroma, taste, and freshness scores.
  */
@@ -16,7 +19,7 @@ public class QualityParams {
      * Numeric score representing freshness level (0–10).
      */
     private final double freshnessScore;
-
+    private static final Logger LOGGER = LogManager.getLogger(QualityParams.class);
     /**
      * Constructs a new QualityParams object.
      *
@@ -26,7 +29,12 @@ public class QualityParams {
      */
     public QualityParams(double aromaScore, double tasteScore, double freshnessScore) {
         if(aromaScore >10 || tasteScore>10 || freshnessScore>10){
-            throw new IllegalArgumentException("Never bigger than 10");
+            String errorMsg = String.format(
+                    "Invalid quality parameters: Aroma=%.1f, Taste=%.1f, Freshness=%.1f. Values cannot be > 10.",
+                    aromaScore, tasteScore, freshnessScore
+            );
+            LOGGER.error(errorMsg);
+            throw new IllegalArgumentException(errorMsg);
         }
         this.aromaScore = aromaScore;
         this.tasteScore = tasteScore;

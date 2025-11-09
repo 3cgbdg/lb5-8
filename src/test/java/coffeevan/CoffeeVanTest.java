@@ -85,4 +85,38 @@ class CoffeeVanTest {
         van.addCoffee(coffee1);
         assertEquals(1, van.findByQuality(1, 10, 1, 10, 1, 10).size());
     }
+
+    @Test
+    void displayCargoInfo_ShouldPrintEmptyCargo() {
+        CoffeeVan emptyVan = new CoffeeVan(1000, 500);
+        emptyVan.displayCargoInfo();
+    }
+
+    @Test
+    void displayCargoInfo_ShouldPrintNonEmptyCargo() {
+        van.addCoffee(coffee1);
+        van.displayCargoInfo();
+    }
+
+    @Test
+    void getRemainingVolume_ShouldWork() {
+        van.addCoffee(coffee1);
+        assertEquals(800.0, van.getRemainingVolume());
+    }
+
+    @Test
+    void getRemainingBudget_ShouldWork() {
+        van.addCoffee(coffee1);
+        assertEquals(400.0, van.getRemainingBudget());
+    }
+
+    @Test
+    void findByQuality_ShouldReturnEmpty_WhenNotInRange() {
+        QualityParams q = mock(QualityParams.class);
+        when(coffee1.getQuality()).thenReturn(q);
+        when(q.isInRange(1, 10, 1, 10, 1, 10)).thenReturn(false);
+
+        van.addCoffee(coffee1);
+        assertTrue(van.findByQuality(1, 10, 1, 10, 1, 10).isEmpty());
+    }
 }

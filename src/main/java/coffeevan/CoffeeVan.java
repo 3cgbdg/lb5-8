@@ -1,6 +1,8 @@
 package coffeevan;
 
 import coffee.Coffee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -10,6 +12,7 @@ import java.util.*;
  * adding, removing, sorting, and filtering coffee products.
  */
 public class CoffeeVan {
+    private static final Logger LOGGER = LogManager.getLogger(CoffeeVan.class);
     private final double maxVolume;
     private final double maxBudget;
     //list for cargo storing
@@ -24,6 +27,7 @@ public class CoffeeVan {
     public CoffeeVan(double maxVolume, double maxBudget) {
         this.maxVolume = maxVolume;
         this.maxBudget = maxBudget;
+        LOGGER.info("New coffee van created. Volume: {}, Budget: {}", maxVolume, maxBudget);
     }
 
     /**
@@ -36,9 +40,11 @@ public class CoffeeVan {
     public boolean addCoffee(Coffee coffee) {
 
         if (coffee == null) {
+            LOGGER.warn("Attempted to add 'null' coffee to the van.");
             throw new IllegalArgumentException("Invalid value");
         }
         cargo.add(coffee);
+        LOGGER.debug("Added coffee: {}", coffee.getName());
         return true;
     }
 
@@ -50,6 +56,7 @@ public class CoffeeVan {
      */
 
     public boolean removeCoffeeById(String id) {
+        LOGGER.debug("Attempting to remove coffee with ID: {}", id);
         //using iterator for save deleting an item out of the array
         Iterator<Coffee> it = cargo.iterator();
         while (it.hasNext()) {
@@ -57,10 +64,11 @@ public class CoffeeVan {
             // comparing by uuid ids
             if (Objects.equals(coffee.getId(), id)) {
                 it.remove();
-
+                LOGGER.info("Successfully removed coffee: {} (ID: {})", coffee.getName(), id);
                 return true;
             }
         }
+        LOGGER.warn("Could not find coffee with ID {} for removal.", id);
         return false;
     }
 
@@ -81,21 +89,21 @@ public class CoffeeVan {
      * Prints detailed information about the van’s cargo to the console.
      */
     public void displayCargoInfo() {
-        System.out.println("CoffeeVan {");
-        System.out.println("  Max Volume: " + maxVolume + " ml");
-        System.out.println("  Max Budget: " + maxBudget + " $");
-        System.out.println("  Current Total Volume: " + getTotalVolume() + " ml");
-        System.out.println("  Current Total Cost: " + getTotalCost() + " ml");
-        System.out.println("  Coffee List:");
+        LOGGER.info("--- Coffee Van Report ---");
+        LOGGER.info("  Max Volume: {} ml", maxVolume);
+        LOGGER.info("  Max Budget: {} $", maxBudget);
+        LOGGER.info("  Current Volume: {} ml", getTotalVolume());
+        LOGGER.info("  Current Cost: {} $", getTotalCost());
+        LOGGER.info("  Coffee List:");
         if (cargo.isEmpty()) {
-            System.out.println("    [No coffee in the van]");
+            LOGGER.info("[No coffee in the van]");
         } else {
             for (Coffee coffee : cargo) {
-                System.out.println("    - " + coffee.getInfo());
+                LOGGER.info("    - {}",coffee.getInfo());
             }
         }
 
-        System.out.println("}");
+        LOGGER.info("--- End of Report ---");
     }
 
     /**

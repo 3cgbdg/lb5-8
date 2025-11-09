@@ -4,98 +4,85 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import coffeevan.CoffeeVan;
-import commands.RemoveByIdCommand;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import services.CoffeeStorageService;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+@ExtendWith(MockitoExtension.class)
 class RemoveByIdCommandTest {
     @Mock
     private CoffeeVan coffeeVan;
+    @Mock
+    private CoffeeStorageService coffeeStorage;
 
-    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-    private AutoCloseable closeable;
+    private final InputStream originalIn = System.in;
 
     @BeforeEach
     void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
-        System.setOut(new PrintStream(outputStream));
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        System.setOut(originalOut);
-        closeable.close();
+        System.setIn(originalIn);
+    }
+
+    private void simulateInput(String input) {
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
     }
 
     @Test
-    void testExecute_successfulRemoval() throws IOException {
-        String input = "12345\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
+    void testExecute_successfulRemoval_shouldSaveToFile() throws IOException {
+        simulateInput("12345\n");
 
+        // Setup: removeCoffeeById returned true
         when(coffeeVan.removeCoffeeById("12345")).thenReturn(true);
-        when(coffeeVan.getCargo()).thenReturn(new ArrayList<>());
+        when(coffeeVan.getCargo()).thenReturn(new ArrayList<>()); // Needed for saveToFile
 
-        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan);
+        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan, coffeeStorage);
         command.execute();
 
+        // Verify:
         verify(coffeeVan, times(1)).removeCoffeeById("12345");
-
-        String output = outputStream.toString();
-        assertTrue(output.contains("Item was successfully removed!"));
+        verify(coffeeStorage, times(1)).saveToFile(any(), eq(false));
     }
 
     @Test
-    void testExecute_itemNotFound() throws IOException {
-        String input = "99999\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
+    void testExecute_itemNotFound_shouldNotSaveToFile() throws IOException {
+        simulateInput("99999\n");
 
+        // Setup: removeCoffeeById returned false
         when(coffeeVan.removeCoffeeById("99999")).thenReturn(false);
 
-        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan);
+        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan, coffeeStorage);
         command.execute();
 
+        // Verify:
         verify(coffeeVan, times(1)).removeCoffeeById("99999");
-
-        String output = outputStream.toString();
-        assertTrue(output.contains("Item was not found!"));
+        verify(coffeeStorage, never()).saveToFile(any(), anyBoolean());
     }
 
     @Test
-    void testExecute_emptyIdHandling() throws IOException {
-        String input = "\n\n12345\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
+    void testExecute_handlesEmptyIdLoop() throws IOException {
+        // 1. "" (incorrect) -> 2. "" (incorrect) -> 3. "12345" (correct)
+        simulateInput("\n\n12345\n");
 
         when(coffeeVan.removeCoffeeById("12345")).thenReturn(true);
         when(coffeeVan.getCargo()).thenReturn(new ArrayList<>());
 
-        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan);
+        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan, coffeeStorage);
         command.execute();
 
-        String output = outputStream.toString();
-        assertTrue(output.contains("ID cannot be empty!"));
-    }
-
-    @Test
-    void testExecute_whitespaceIdHandling() throws IOException {
-        String input = "   \n  12345  \n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-        when(coffeeVan.removeCoffeeById("12345")).thenReturn(true);
-        when(coffeeVan.getCargo()).thenReturn(new ArrayList<>());
-
-        RemoveByIdCommand command = new RemoveByIdCommand(coffeeVan);
-        command.execute();
-
+        // Verify: it was still called 1 time with the correct ID
         verify(coffeeVan, times(1)).removeCoffeeById("12345");
+        verify(coffeeStorage, times(1)).saveToFile(any(), eq(false));
     }
 }

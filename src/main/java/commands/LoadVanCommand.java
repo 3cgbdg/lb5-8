@@ -8,6 +8,8 @@ import coffee.enums.ConcentrationLevel;
 import coffee.enums.GrindSize;
 import coffee.enums.RoastLevel;
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import packaging.Packaging;
 import qualityparams.QualityParams;
 
@@ -24,6 +26,7 @@ import java.util.Scanner;
  * </ul>
  */
 public class LoadVanCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(LoadVanCommand.class);
     private final CoffeeVan coffeeVan;
 
     /**
@@ -52,7 +55,7 @@ public class LoadVanCommand implements Command {
         // if not enough volumes or budget returning void
         while (true) {
             if (coffeeVan.getRemainingVolume() <= 0 || coffeeVan.getRemainingBudget() <= 0) {
-                System.out.println(coffeeVan.getRemainingVolume() <= 0 ? "There is no volume in the van!" : "There is no budget left!");
+                LOGGER.warn("Cannot load: {}", (coffeeVan.getRemainingVolume() <= 0 ? "No volume left!" : "Not enough budget!"));
                 return;
             }
 
@@ -62,7 +65,7 @@ public class LoadVanCommand implements Command {
             while (name.isEmpty()) {
                 System.out.print("Enter coffee name: ");
                 name = sc.nextLine().trim();
-                if (name.isEmpty()) System.out.println("Name cannot be empty");
+                if (name.isEmpty()) LOGGER.warn("Name cannot be empty.");
 
             }
             // weight
@@ -71,9 +74,9 @@ public class LoadVanCommand implements Command {
                 System.out.print("Enter weight (>0): ");
                 try {
                     weight = Double.parseDouble(sc.nextLine());
-                    if (weight <= 0) System.out.println("Weight must be positive!");
+                    if (weight <= 0) LOGGER.warn("Weight must be positive!");
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid input! Enter a number.");
+                    LOGGER.warn("Invalid input! Enter a number.", e);
                 }
             }
 
@@ -84,13 +87,13 @@ public class LoadVanCommand implements Command {
                 System.out.print("Enter price (>0): ");
                 try {
                     price = Double.parseDouble(sc.nextLine());
-                    if (price <= 0) System.out.println("Price must be positive!");
+                    if (price <= 0) LOGGER.warn("Price must be positive!");
                     else if (price > coffeeVan.getRemainingBudget()) {
-                        System.out.println("There is not enough budget to afford it!");
+                        LOGGER.warn("There is not enough budget to afford it!");
                         price = -1;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid input! Enter a number.");
+                    LOGGER.warn("Invalid input! Enter a number.",e);
                 }
             }
 
@@ -101,7 +104,7 @@ public class LoadVanCommand implements Command {
                 System.out.print("Type in coffee type (bean | ground | instant): ");
                 coffeeType = sc.nextLine().trim().toLowerCase();
                 if (!(coffeeType.equals("bean") || coffeeType.equals("ground") || coffeeType.equals("instant")))
-                    System.out.println("Invalid type! Please enter bean, ground or instant.");
+                    LOGGER.warn("Invalid type! Please enter bean, ground or instant.");
             }
 
             // spec fields
@@ -117,7 +120,7 @@ public class LoadVanCommand implements Command {
                     //getting split input for getting parts [0] - origin, [1] - roast level
                     String[] parts = sc.nextLine().trim().split(" ");
                     if (parts.length < 2) {
-                        System.out.println("Please enter both origin and roast level!");
+                        LOGGER.warn("Please enter both origin and roast level!");
                         continue;
                     }
                     origin = parts[0];
@@ -125,7 +128,7 @@ public class LoadVanCommand implements Command {
                         //parsing into enum value
                         roastLevel = RoastLevel.valueOf(parts[1].toUpperCase());
                     } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid roast level! Try again.");
+                        LOGGER.warn("Invalid roast level! Try again.",e);
                         roastLevel = null;
                     }
                 }
@@ -136,7 +139,7 @@ public class LoadVanCommand implements Command {
                     try {
                         grindSize = GrindSize.valueOf(input);
                     } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid grind size! Try again.");
+                        LOGGER.warn("Invalid grind size! Try again.",e);
                     }
                 }
             } else {
@@ -146,7 +149,7 @@ public class LoadVanCommand implements Command {
                     try {
                         concentrationLevel = ConcentrationLevel.valueOf(input);
                     } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid concentration level! Try again.");
+                        LOGGER.warn("Invalid concentration level! Try again.",e);
                     }
                 }
             }
@@ -166,13 +169,13 @@ public class LoadVanCommand implements Command {
                 System.out.print("Enter packaging volume (>0): ");
                 try {
                     volume = Double.parseDouble(sc.nextLine());
-                    if (volume <= 0) System.out.println("Volume must be positive!");
+                    if (volume <= 0) LOGGER.warn("Volume must be positive!");
                     else if (volume > coffeeVan.getRemainingVolume()) {
-                        System.out.println("There is not enough volume in the van!");
+                        LOGGER.warn("There is not enough volume in the van!");
                         volume = -1;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid input! Enter a number.");
+                    LOGGER.warn("Invalid input! Enter a number.",e);
                 }
             }
 
@@ -190,7 +193,7 @@ public class LoadVanCommand implements Command {
                 isLoaded = coffeeVan.addCoffee(new InstantCoffee(name, weight, price, quality, packaging, concentrationLevel));
             }
 
-            System.out.println(isLoaded ? "Item has been successfully loaded!" : "Something went wrong!");
+            LOGGER.info(isLoaded ? "Item has been successfully loaded!" : "Something went wrong!");
 
             System.out.print("Want to stop (y/n)? ");
             String answer = sc.nextLine();
@@ -212,9 +215,9 @@ public class LoadVanCommand implements Command {
                 //parsing line for getting double value
                 score = Double.parseDouble(line);
                 if (score >= 1 && score <= 10) break;
-                else System.out.println("Score must be between 1 and 10!");
+                else LOGGER.warn("Score must be between 1 and 10!");
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Please enter a number.");
+                LOGGER.warn("Invalid input! Please enter a number.",e);
             }
         }
         return score;

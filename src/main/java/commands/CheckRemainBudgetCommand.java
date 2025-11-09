@@ -1,11 +1,14 @@
 package commands;
 
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Command that displays the remaining budget available in the {@link CoffeeVan}.
  */
 public class CheckRemainBudgetCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(CheckRemainBudgetCommand.class);
     private final CoffeeVan coffeeVan;
 
     /**
@@ -22,7 +25,7 @@ public class CheckRemainBudgetCommand implements Command {
      */
     @Override
     public void execute() {
-        System.out.format("Remaining Budget is %f", coffeeVan.getRemainingBudget());
+        LOGGER.info("Remaining Budget: {} $", coffeeVan.getRemainingBudget());
     }
 }
 

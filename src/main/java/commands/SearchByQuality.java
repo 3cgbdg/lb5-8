@@ -2,6 +2,8 @@ package commands;
 
 import coffee.Coffee;
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,6 +14,7 @@ import java.util.Scanner;
  * Filters {@link Coffee} objects by aroma, taste, and freshness values.
  */
 public class SearchByQuality implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(SearchByQuality.class);
     private final CoffeeVan coffeeVan;
 
     /**
@@ -31,7 +34,7 @@ public class SearchByQuality implements Command {
         List<Coffee> coffees = coffeeVan.getCargo();
 //        if empty returning void
         if (coffees.isEmpty()) {
-            System.out.println("There is no coffee yet!");
+            LOGGER.warn("Cannot search by quality: van is empty!");
             return;
         }
         Scanner sc = new Scanner(System.in);
@@ -42,7 +45,7 @@ public class SearchByQuality implements Command {
             minAroma = readDouble(sc, "Enter minimum aroma (1-10): ");
             maxAroma = readDouble(sc, "Enter maximum aroma (1-10): ");
             if (minAroma <= maxAroma) break;
-            System.out.println("Minimum cannot be greater than maximum. Try again.");
+            getWarn();
         }
 
         double minTaste, maxTaste;
@@ -50,7 +53,7 @@ public class SearchByQuality implements Command {
             minTaste = readDouble(sc, "Enter minimum taste (1-10): ");
             maxTaste = readDouble(sc, "Enter maximum taste (1-10): ");
             if (minTaste <= maxTaste) break;
-            System.out.println("Minimum cannot be greater than maximum. Try again.");
+            getWarn();
         }
 
         double minFreshness, maxFreshness;
@@ -58,21 +61,27 @@ public class SearchByQuality implements Command {
             minFreshness = readDouble(sc, "Enter minimum freshness (1-10): ");
             maxFreshness = readDouble(sc, "Enter maximum freshness (1-10): ");
             if (minFreshness <= maxFreshness) break;
-            System.out.println("Minimum cannot be greater than maximum. Try again.");
+            getWarn();
         }
-    // creating a list of found coffees with such a quality-range
+        // creating a list of found coffees with such a quality-range
+        LOGGER.info("Searching by parameters: Aroma [{} - {}], Taste [{} - {}], Freshness [{} - {}]",
+                minAroma, maxAroma, minTaste, maxTaste, minFreshness, maxFreshness);
         List<Coffee> foundItems = coffeeVan.findByQuality(
                 minAroma, maxAroma, minTaste, maxTaste, minFreshness, maxFreshness
         );
 
         if (foundItems.isEmpty()) {
-            System.out.println("No coffee found matching these quality parameters.");
+            LOGGER.info("No coffee found matching these quality parameters.");
         } else {
-            System.out.println("Found items:");
+            LOGGER.info("Found items:");
             for (Coffee item : foundItems) {
-                System.out.println(item.getInfo());
+                LOGGER.info(item.getInfo());
             }
         }
+    }
+
+    private static void getWarn() {
+        LOGGER.warn("Minimum cannot be greater than maximum. Try again.");
     }
 
 
@@ -84,9 +93,9 @@ public class SearchByQuality implements Command {
                 //parsing value from string to double
                 value = Double.parseDouble(sc.nextLine());
                 if (value >= 1 && value <= 10) return value;
-                else System.out.println("Value must be between 1 and 10.");
+                else LOGGER.warn("Value must be between 1 and 10.");
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input! Enter a number.");
+                LOGGER.warn("Invalid input! Enter a number.",e);
             }
         }
     }

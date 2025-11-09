@@ -2,6 +2,8 @@ package commands;
 
 import coffee.Coffee;
 import coffeevan.CoffeeVan;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import services.CoffeeStorageService;
 
 import java.io.IOException;
@@ -17,7 +19,7 @@ import java.util.List;
  * subclass (e.g., BeanCoffee, GroundCoffee, InstantCoffee) from the text data.</p>
  *
  * <p>File name: {@code coffee_data.txt}</p>
- *
+ * <p>
  * Example file content:
  * <pre>
  * BEAN;1234;Arabica;250.0;15.99;8.0;9.0;7.0;Paper;250.0;Brazil;MEDIUM
@@ -25,8 +27,10 @@ import java.util.List;
  * </pre>
  */
 public class GetFromFileCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(GetFromFileCommand.class);
     private final CoffeeVan coffeeVan;
     private final CoffeeStorageService storageService;
+
     /**
      * Constructs a new {@code GetFromFileCommand} instance.
      *
@@ -34,8 +38,9 @@ public class GetFromFileCommand implements Command {
      */
     public GetFromFileCommand(CoffeeVan coffeeVan, CoffeeStorageService storageService) {
         this.coffeeVan = coffeeVan;
-        this.storageService =storageService;
+        this.storageService = storageService;
     }
+
     /**
      * Executes the command to read coffee data from the file
      * and add each valid {@link Coffee} object to the {@link CoffeeVan}.
@@ -44,11 +49,12 @@ public class GetFromFileCommand implements Command {
      */
     @Override
     public void execute() throws IOException {
+        LOGGER.info("Loading coffee from file...");
         List<Coffee> loadedCoffee = storageService.getFromFile();
-        for(Coffee coffee :loadedCoffee){
+        for (Coffee coffee : loadedCoffee) {
             coffeeVan.addCoffee(coffee);
         }
-        System.out.println("Successfully received!\n");
+        LOGGER.info("Successfully loaded {} items from file.", loadedCoffee.size());
 
     }
 }

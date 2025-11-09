@@ -58,7 +58,7 @@ class CoffeeStorageServiceTest {
         when(mockCoffee2.toFileString()).thenReturn("GROUND;Kenya;...line2");
 
 
-        storageService.saveToFile(coffeeList);
+        storageService.saveToFile(coffeeList,false);
 
 
         List<String> actualLines = Files.readAllLines(tempFile);
